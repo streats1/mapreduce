@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
@@ -17,11 +18,10 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-import com.sun.org.apache.commons.logging.LogFactory;
 
 public class WordCount {
 	
-private static Log log = (Log) LogFactory.getLog(WordCount.class);
+private static Log log = LogFactory.getLog(WordCount.class);
 
 	public static class MyMapper extends Mapper<LongWritable,Text, Text,LongWritable> {
 		private Text word = new Text(); 
