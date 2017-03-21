@@ -30,27 +30,6 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		private StringWritable word = new StringWritable(); 
 		private static NumberWritable one = new NumberWritable(1L); 
 		
-/*
-		@Override
-		protected void cleanup(Mapper<LongWritable, Text, Text,NumberWritable>.Context context)
-				throws IOException, InterruptedException {
-			log.info("clean up call ===========<<<<called");
-		}*/
-		@Override
-		protected void setup(Mapper<LongWritable, Text, StringWritable,NumberWritable>.Context context)
-				throws IOException, InterruptedException {
-			log.info("setup=======>> map");
-		}
-
-		//run은 오버라이드 하지않는다.
-	/*	@Override
-		public void run(Mapper<LongWritable, Text, StringWritable, LongWritable>.Context context)
-				throws IOException, InterruptedException {
-			log.info("run =====>>map");
-			super.run(context);
-		}*/
-
-		
 
 		@Override
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, StringWritable, NumberWritable>.Context context)
@@ -60,7 +39,6 @@ private static Log log = LogFactory.getLog(WordCount.class);
 			StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,|()<> ''.:");
 			while(tokenize.hasMoreTokens()){
 			word.set(tokenize.nextToken().toLowerCase());
-			
 			context.write(word,one); 
 			}
 			}
