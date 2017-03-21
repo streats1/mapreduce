@@ -78,7 +78,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		//4.출력키
 		job.setMapOutputKeyClass(StringWritable.class);
 		//5출력 밸류ㅜ
-		job.setMapOutputValueClass(LongWritable.class);
+		job.setMapOutputValueClass(NumberWritable.class);
 		
 		//6입력파일 포멧 지정(생략가능)
 		job.setInputFormatClass(TextInputFormat.class);
