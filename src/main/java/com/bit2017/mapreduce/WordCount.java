@@ -59,6 +59,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 			
 		}
 		sumWritable.set(sum);
+		context.getCounter("MyCounter","Test Count").increment(sum);
 		context.write(key, sumWritable);
 		}
 		
