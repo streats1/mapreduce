@@ -35,6 +35,6 @@ public class NumberWritable implements Writable{
 	}
 	@Override
 	public String toString() {
-		return "NumberWritable [number=" + number + "]";
+		return String.valueOf(number);
 	}
 }
