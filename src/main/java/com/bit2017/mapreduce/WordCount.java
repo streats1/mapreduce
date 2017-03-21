@@ -76,6 +76,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		job.setMapperClass(MyMapper.class);
 		//3.리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
+		job.setNumReduceTasks( 2 );
 		
 		//4.출력키
 		job.setMapOutputKeyClass(StringWritable.class);
