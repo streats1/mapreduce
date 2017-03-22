@@ -45,7 +45,7 @@ public class WordCount2 {
 		
 	}
 
-	public static class SearchText extends Reducer<StringWritable,NumberWritable,StringWritable ,NumberWritable> {
+	public static class MyReducer extends Reducer<StringWritable,NumberWritable,StringWritable ,NumberWritable> {
 
 		private NumberWritable sumWritable = new NumberWritable();
 		
@@ -75,9 +75,9 @@ public class WordCount2 {
 		//2.mapper class 지정
 		job.setMapperClass(MyMapper.class);
 		//3.리듀서 클래스 지정
-		job.setReducerClass(SearchText.class);
+		job.setReducerClass(MyReducer.class);
 		
-		job.setCombinerClass(SearchText.class);
+		job.setCombinerClass(MyReducer.class);
 		
 		//4.출력키
 		job.setMapOutputKeyClass(StringWritable.class);
@@ -93,7 +93,6 @@ public class WordCount2 {
 		FileInputFormat.addInputPath(job,new Path(args[0]));	// 이게 정확히 뭔지.
 		//9풀력파일 이름지정
 		FileOutputFormat.setOutputPath(job,new Path(args[1]));
-		FileOutputFormat.setOutputPath(job, new Path(args[2]));
 		//실행
 		job.waitForCompletion(true);
 	}
