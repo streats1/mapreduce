@@ -76,7 +76,7 @@ public class WordCount3 {
 		job.setReducerClass(MyReducer.class);
 		
 		job.setNumReduceTasks( 2 );
-		job.setCombinerClass(MyReducer.class);
+	/*	job.setCombinerClass(MyReducer.class);*/
 		
 		//4.출력키
 		job.setMapOutputKeyClass(StringWritable.class);
