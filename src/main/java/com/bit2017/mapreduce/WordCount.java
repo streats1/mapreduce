@@ -80,7 +80,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		//3.리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
 		//리튜서 타스크 갯수
-	/*	job.setNumReduceTasks( 2 );*/
+		job.setNumReduceTasks( 2 );
 		job.setCombinerClass(SearchText.class);
 		//4.출력키
 		job.setMapOutputKeyClass(StringWritable.class);
