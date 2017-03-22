@@ -14,6 +14,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
@@ -26,13 +27,13 @@ public class WordCount {
 	
 private static Log log = LogFactory.getLog(WordCount.class);
 
-	public static class MyMapper extends Mapper<LongWritable,Text, Text,LongWritable> {
+	public static class MyMapper extends Mapper<Text,Text, Text,LongWritable> {
 		private Text word = new Text(); 
 		private static LongWritable one = new LongWritable(1L); //?
 		
 
 		@Override
-		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text,
+		protected void map(Text key, Text value, Mapper<Text, Text, Text,
 				LongWritable>.Context context)//context 정확한 의미알기
 				throws IOException, InterruptedException {
 			
@@ -87,7 +88,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		job.setMapOutputValueClass(LongWritable.class);
 		
 		//6입력파일 포멧 지정(생략가능) 
-		job.setInputFormatClass(TextInputFormat.class);
+		job.setInputFormatClass(KeyValueTextInputFormat.class);
 		//7 출력파일 포맷 ㅈㅣ정.(생략가능)
 		job.setOutputFormatClass(TextOutputFormat.class);//왜 이게 필요한지
 		

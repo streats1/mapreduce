@@ -34,7 +34,7 @@ public class TopN {
 			throws IOException, InterruptedException {
 		ItemFreq newItemFreq = new ItemFreq();
 		newItemFreq.setItem(key.toString());
-		newItemFreq.setFreq(Long.parseLong(value.toString()));
+		newItemFreq.setFreq(Long.parseLong(value.toString())); 
 		
 		ItemFreq head = pq.peek();
 		if(pq.size()< topN || head.getFreq() < newItemFreq.getFreq()){ //큰숫자를 넣는 이프문
