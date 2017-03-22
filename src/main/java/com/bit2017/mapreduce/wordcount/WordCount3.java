@@ -79,7 +79,7 @@ public class WordCount3 {
 	/*	job.setCombinerClass(MyReducer.class);*/
 		
 		//4.출력키
-		job.setMapOutputKeyClass(StringWritable.class);
+		job.setMapOutputKeyClass(Text.class);
 		//5출력 밸류ㅜ
 		job.setMapOutputValueClass(LongWritable.class);
 		
