@@ -21,15 +21,15 @@ import com.bit2017.mapreduce.io.StringWritable;
 public class WordCount3 {
 /*	private static Log log = LogFactory.getLog(WordCount.class);
 */
-	public static class MyMapper extends Mapper<Text,Text, Text,LongWritable> {
+	public static class MyMapper extends Mapper<LongWritable,Text, Text,LongWritable> {
 		private Text word = new Text(); 
 		private static LongWritable one = new LongWritable(1L); 
 		
 
 		@Override
-		protected void map(Text key, Text value, Mapper<Text, Text, Text, LongWritable>.Context context)
+		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
-			
+			 
 			String line = value.toString();
 			StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,|()<> ''.:");
 			while(tokenize.hasMoreTokens()){
@@ -57,6 +57,7 @@ public class WordCount3 {
 			
 		sumWritable.set(sum);
 		context.getCounter("Word Status","Count of all Words").increment(sum);
+		context.getCounter("Word Status","Count of unique Words").increment(1);
 	/*	context.get*/
 		context.write(key, sumWritable);
 		}
