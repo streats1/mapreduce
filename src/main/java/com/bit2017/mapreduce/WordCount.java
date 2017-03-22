@@ -18,7 +18,6 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-import com.bit2017.mapreduce.WordCount2.SearchText;
 import com.bit2017.mapreduce.io.NumberWritable;
 import com.bit2017.mapreduce.io.StringWritable;
 
@@ -81,7 +80,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		job.setReducerClass(MyReducer.class);
 		//리튜서 타스크 갯수
 		job.setNumReduceTasks( 2 );
-		job.setCombinerClass(SearchText.class);
+		job.setCombinerClass(MyReducer.class);
 		//4.출력키
 		job.setMapOutputKeyClass(StringWritable.class);
 		//5출력 밸류ㅜ
