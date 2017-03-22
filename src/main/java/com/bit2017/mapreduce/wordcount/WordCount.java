@@ -67,7 +67,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		context.write(key, sumWritable);//what?word
 		}
 		//중복 골라내는 거 알아보기.......................
-	
+	}
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();//이것과
@@ -101,5 +101,4 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		//실행실행에 필요한 것
 		job.waitForCompletion(true);// .
 	}
-}
 }
