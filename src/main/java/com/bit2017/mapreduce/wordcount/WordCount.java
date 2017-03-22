@@ -40,7 +40,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 			/*StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,|()<> ''.:");
 			while(tokenize.hasMoreTokens()){
 */			word.set(line);//word 
-			context.write(word,one); 
+			context.write(word,one);  
 			}
 			}
 		
@@ -86,7 +86,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		//5출력 밸류ㅜ
 		job.setMapOutputValueClass(LongWritable.class);
 		
-		//6입력파일 포멧 지정(생략가능)
+		//6입력파일 포멧 지정(생략가능) 
 		job.setInputFormatClass(TextInputFormat.class);
 		//7 출력파일 포맷 ㅈㅣ정.(생략가능)
 		job.setOutputFormatClass(TextOutputFormat.class);//왜 이게 필요한지

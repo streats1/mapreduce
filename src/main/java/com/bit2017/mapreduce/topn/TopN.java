@@ -79,7 +79,7 @@ public class TopN {
 				if(pq.size() > topN){
 					pq.remove();
 				}
-			
+			 
 		}
 		}
 		@Override
