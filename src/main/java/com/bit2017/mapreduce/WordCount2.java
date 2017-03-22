@@ -39,26 +39,27 @@ public class WordCount2 {
 			while(tokenize.hasMoreTokens()){
 			word.set(tokenize.nextToken().toLowerCase());
 			context.write(word,one); 
+			line.contains(line);
 			}
 			}
 		
 	}
 
-	public static class MyReducer extends Reducer<StringWritable,NumberWritable,StringWritable ,NumberWritable> {
+	public static class SearchText extends Reducer<StringWritable,NumberWritable,StringWritable ,NumberWritable> {
 
 		private NumberWritable sumWritable = new NumberWritable();
 		
 		@Override
 		protected void reduce(StringWritable key, Iterable<NumberWritable> values,
 				Reducer<StringWritable, NumberWritable, StringWritable, NumberWritable>.Context context) throws IOException, InterruptedException {
-		long sum = 0;
+			long sum = 0;
 		for(NumberWritable value : values){
 			
 			sum += value.get();
 			
 		}
+			
 		sumWritable.set(sum);
-		
 		context.getCounter("Word Status","Count of all Words").increment(sum);
 		context.write(key, sumWritable);
 		}
@@ -74,9 +75,9 @@ public class WordCount2 {
 		//2.mapper class 지정
 		job.setMapperClass(MyMapper.class);
 		//3.리듀서 클래스 지정
-		job.setReducerClass(MyReducer.class);
+		job.setReducerClass(SearchText.class);
 		
-		job.setCombinerClass(MyReducer.class);
+		job.setCombinerClass(SearchText.class);
 		
 		//4.출력키
 		job.setMapOutputKeyClass(StringWritable.class);
@@ -87,11 +88,12 @@ public class WordCount2 {
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
 		//7 출력파일 포맷 ㅈㅣ정.(생략가능)
 		job.setOutputFormatClass(TextOutputFormat.class);
-		
+
 		//8 파일 위치 지정
-		FileInputFormat.addInputPath(job,new Path(args[0]));	
+		FileInputFormat.addInputPath(job,new Path(args[0]));	// 이게 정확히 뭔지.
 		//9풀력파일 이름지정
 		FileOutputFormat.setOutputPath(job,new Path(args[1]));
+		FileOutputFormat.setOutputPath(job, new Path(args[2]));
 		//실행
 		job.waitForCompletion(true);
 	}

@@ -32,7 +32,8 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		
 
 		@Override
-		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, StringWritable, NumberWritable>.Context context)
+		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, StringWritable,
+				NumberWritable>.Context context)//context 정확한 의미알기
 				throws IOException, InterruptedException {
 			
 			String line = value.toString();
@@ -45,9 +46,10 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		
 	}
 
-	public static class MyReducer extends Reducer<StringWritable,NumberWritable,StringWritable ,NumberWritable> {
+	public static class MyReducer extends Reducer<StringWritable,NumberWritable,StringWritable ,
+	NumberWritable> {//받는것과 나가는 클래스가 같은것,.
 
-		private NumberWritable sumWritable = new NumberWritable();
+		private NumberWritable sumWritable = new NumberWritable();//왜 숫자클래스만 객체생성??
 		
 		@Override
 		protected void reduce(StringWritable key, Iterable<NumberWritable> values,
@@ -55,28 +57,29 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		long sum = 0;
 		for(NumberWritable value : values){
 			
-			sum += value.get();
+			sum += value.get();//전체 갯수.
 			
 		}
 		sumWritable.set(sum);
 		
 		context.getCounter("Word Status","Count of all Words").increment(sum);
-		context.write(key, sumWritable);
+		context.write(key, sumWritable);//what?
 		}
-		
+		//중복 골라내는 거 알아보기.......................
 	}
 
 	public static void main(String[] args) throws Exception {
-		Configuration conf = new Configuration();
-		Job job = new Job(conf,"WordCount");
+		Configuration conf = new Configuration();//이것과
+		Job job = new Job(conf,"WordCount");//이것의 의미!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 꼭물어보기
 		//1.job instance 초기화작업
-		job.setJarByClass(WordCount.class);
+		job.setJarByClass(WordCount.class);//
 		
 		//2.mapper class 지정
 		job.setMapperClass(MyMapper.class);
 		//3.리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
-		job.setNumReduceTasks( 2 );
+		//리튜서 타스크 갯수
+	/*	job.setNumReduceTasks( 2 );*/
 		
 		//4.출력키
 		job.setMapOutputKeyClass(StringWritable.class);
@@ -86,13 +89,16 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		//6입력파일 포멧 지정(생략가능)
 		job.setInputFormatClass(TextInputFormat.class);
 		//7 출력파일 포맷 ㅈㅣ정.(생략가능)
-		job.setOutputFormatClass(TextOutputFormat.class);
+		job.setOutputFormatClass(TextOutputFormat.class);//왜 이게 필요한지
+		
 		
 		//8 파일 위치 지정
-		FileInputFormat.addInputPath(job,new Path(args[0]));	
-		//9풀력파일 이름지정
+		FileInputFormat.addInputPath(job,new Path(args[0]));// 왜만드는지,	무슨 파일을 말하는지
+		//9출력파일 위치지정 (/input/README.txt 이것이 인풋 /wordcount-result19요것이 아웃풋 그래서 저 잡 인아웃풋이 필요함)
 		FileOutputFormat.setOutputPath(job,new Path(args[1]));
-		//실행
-		job.waitForCompletion(true);
+		//
+		
+		//실행실행에 필요한 것
+		job.waitForCompletion(true);// .
 	}
 }
