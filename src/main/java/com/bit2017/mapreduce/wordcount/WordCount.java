@@ -18,6 +18,8 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+import com.bit2017.mapreduce.topn.TopN.MyMapper;
+
 
 
 public class WordCount {
@@ -35,14 +37,14 @@ private static Log log = LogFactory.getLog(WordCount.class);
 				throws IOException, InterruptedException {
 			
 			String line = value.toString();
-			StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,|()<> ''.:");
+			/*StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,|()<> ''.:");
 			while(tokenize.hasMoreTokens()){
-			word.set(tokenize.nextToken().toLowerCase());
+*/			word.set(line);//word 
 			context.write(word,one); 
 			}
 			}
 		
-	}
+	
 
 	public static class MyReducer extends Reducer<Text,LongWritable,Text ,
 	LongWritable> {//받는것과 나가는 클래스가 같은것,.
@@ -51,7 +53,8 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		
 		@Override
 		protected void reduce(Text key, Iterable<LongWritable> values,
-				Reducer<Text, LongWritable, Text, LongWritable>.Context context) throws IOException, InterruptedException {
+				Reducer<Text, LongWritable, Text, LongWritable>.Context context) throws IOException, InterruptedException 
+		{
 		long sum = 0;
 		for(LongWritable value : values){
 			
@@ -64,7 +67,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		context.write(key, sumWritable);//what?word
 		}
 		//중복 골라내는 거 알아보기.......................
-	}
+	
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();//이것과
@@ -98,4 +101,5 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		//실행실행에 필요한 것
 		job.waitForCompletion(true);// .
 	}
+}
 }

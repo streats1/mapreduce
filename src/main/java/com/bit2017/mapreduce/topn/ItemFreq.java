@@ -18,4 +18,4 @@ public class ItemFreq {
 	}
 	
 
-}
+}//저장고.

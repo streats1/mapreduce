@@ -22,9 +22,9 @@ public class TopN {
 	private int topN =10;
 	private PriorityQueue<ItemFreq> pq = null;
 	@Override
-	protected void setup(Mapper<Text, Text, Text, LongWritable>.Context context)
+	protected void setup(Mapper<Text, Text, Text, LongWritable>.Context context)//역할
 			throws IOException, InterruptedException {
-		topN = context.getConfiguration().getInt("topN",10);
+		topN = context.getConfiguration().getInt("topN",10);// max  10개를 지정
 		pq =new PriorityQueue<ItemFreq>(10,new ItemFreqComparator());
 		
 	}
@@ -37,9 +37,9 @@ public class TopN {
 		newItemFreq.setFreq(Long.parseLong(value.toString()));
 		
 		ItemFreq head = pq.peek();
-		if(pq.size()< topN || head.getFreq() < newItemFreq.getFreq()){ // new 기본
+		if(pq.size()< topN || head.getFreq() < newItemFreq.getFreq()){ //큰숫자를 넣는 이프문
 			pq.add(newItemFreq);
-			if(pq.size() > topN){
+			if(pq.size() > topN){// 10개 이상이 되면 알아서 지워라
 				pq.remove();
 			}
 			
@@ -48,17 +48,16 @@ public class TopN {
 	@Override
 	protected void cleanup(Mapper<Text, Text, Text, LongWritable>.Context context)
 			throws IOException, InterruptedException {
-		while(pq.isEmpty() == false){
-		ItemFreq itemfreq=	pq.remove();
+		while(pq.isEmpty() == false){// 값이 없을때 까지 
+		ItemFreq itemfreq=	pq.remove();//값을 빼달라는 의미.
 		context.write(new Text(itemfreq.getItem()),new LongWritable(itemfreq.getFreq()));
 		}
-
 	}
-	}
+}
 
 	public static class MyReducer extends Reducer<Text,LongWritable,Text ,
 	LongWritable> {//받는것과 나가는 클래스가 같은것,.
-		private int topN =10;
+		private int topN =10;//디폴트값
 		private PriorityQueue<ItemFreq> pq = null;
 		@Override
 		protected void reduce(Text key, Iterable<LongWritable> values,
@@ -67,11 +66,11 @@ public class TopN {
 			
 			Long sum = 0L;
 			for(LongWritable value:values){
-				sum += value.get();
+				sum += value.get();//중복골라주고
 				
 			}
 			ItemFreq newItemFreq = new ItemFreq();
-			newItemFreq.setItem(key.toString());
+			newItemFreq.setItem(key.toString());//택스트 나열
 			newItemFreq.setFreq(sum);
 			
 			ItemFreq head = pq.peek();
@@ -90,7 +89,7 @@ public class TopN {
 			pq =new PriorityQueue<ItemFreq>(10,new ItemFreqComparator());
 		}
 		@Override
-		protected void cleanup(Reducer<Text, LongWritable, Text, LongWritable>.Context context)
+		protected void cleanup(Reducer<Text, LongWritable, Text, LongWritable>.Context context)//정리.
 				throws IOException, InterruptedException {
 			while(pq.isEmpty() == false){
 			ItemFreq itemfreq=	pq.remove();
