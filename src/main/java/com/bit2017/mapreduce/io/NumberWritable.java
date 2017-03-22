@@ -15,7 +15,7 @@ public class NumberWritable implements Writable{
 	}
 	
 	public NumberWritable(Long number){
-		this.number=number;
+		this.number=number;// 생성자 왜 만드렁ㅆ는지
 	}
 	public void set(Long number){
 		this.number = number;
