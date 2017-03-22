@@ -76,7 +76,7 @@ public class WordCount3 {
 		job.setReducerClass(MyReducer.class);
 		
 		job.setNumReduceTasks( 2 );
-	/*	job.setCombinerClass(MyReducer.class);*/
+	job.setCombinerClass(MyReducer.class);//미니 리듀스 (들어가기전에 맵돌고있을떄 류듀스 작업한번 해준다.)
 		
 		//4.출력키
 		job.setMapOutputKeyClass(Text.class);
