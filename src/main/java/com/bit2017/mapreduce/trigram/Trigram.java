@@ -75,20 +75,18 @@ public class Trigram {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();//이것과
-		Job job = new Job(conf,"Count Trigram");//이것의 의미!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 꼭물어보기
+		Job job = new Job(conf,"Trigram");//이것의 의미!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 꼭물어보기
 		//1.job instance 초기화작업
 		job.setJarByClass(Trigram.class);//
-		job.setCombinerClass(MyReducer.class);
-		//2.mapper class 지정
 		job.setMapperClass(MyMapper.class);
 		//3.리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
 		//리튜서 타스크 갯수
 		
 		//4.출력키
-		job.setMapOutputKeyClass(Text.class);
+		job.setOutputKeyClass(Text.class);
 		//5출력 밸류ㅜ
-		job.setMapOutputValueClass(LongWritable.class);
+		job.setOutputValueClass(LongWritable.class);
 		
 		//6입력파일 포멧 지정(생략가능) 
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
