@@ -32,7 +32,7 @@ public class Trigram {
 			
 			String line = value.toString();
 			StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,/|()<> ''.:");
-			if(tokenize.countTokens() < 3) {
+			if(tokenize.countTokens() >= 3) { 
 				String firstToken = tokenize.nextToken().toLowerCase();
 				String secondToken = tokenize.nextToken().toLowerCase();
 			while(tokenize.hasMoreTokens()){
