@@ -12,13 +12,14 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 import com.bit2017.mapreduce.topn.TopN;
+ 
 
-
-public class Trigram {
+public class Trigram { 
 
 	public static class MyMapper extends Mapper<Text,Text, Text,LongWritable> {
 		private Text trigram = new Text(); 
@@ -78,7 +79,6 @@ public class Trigram {
 		Job job = new Job(conf,"Trigram");//이것의 의미!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 꼭물어보기
 		//1.job instance 초기화작업
 		job.setJarByClass(Trigram.class);//
-		job.setCombinerClass(MyReducer.class);
 		//2.mapper class 지정
 		job.setMapperClass(MyMapper.class);
 		//3.리듀서 클래스 지정
@@ -91,7 +91,7 @@ public class Trigram {
 		job.setMapOutputValueClass(LongWritable.class);
 		
 		//6입력파일 포멧 지정(생략가능) 
-		job.setInputFormatClass(KeyValueTextInputFormat.class);
+		job.setInputFormatClass(TextInputFormat.class);
 		//7 출력파일 포맷 ㅈㅣ정.(생략가능)
 		job.setOutputFormatClass(TextOutputFormat.class);//왜 이게 필요한지
 		
@@ -103,7 +103,7 @@ public class Trigram {
 		//
 		job.waitForCompletion(true);
 		
-		if(job.waitForCompletion(true)==false){
+		if(job.waitForCompletion(true)== false){
 			return;
 		}
 		Configuration conf2 = new Configuration();
