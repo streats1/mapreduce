@@ -49,7 +49,7 @@ public class Trigram {
 			}
 		}
 	
-
+	}
 	public static class MyReducer extends Reducer<Text,LongWritable,Text ,
 	LongWritable> {//받는것과 나가는 클래스가 같은것,.
 
@@ -107,4 +107,4 @@ public class Trigram {
 	}
 
 }
-}
+
