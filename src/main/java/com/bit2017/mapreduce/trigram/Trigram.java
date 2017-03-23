@@ -124,7 +124,7 @@ public class Trigram {
 	    job2.getConfiguration().setInt( "topN", 10 );
 
 		//실행실행에 필요한 것 
-		job.waitForCompletion(true);// .
+		job2.waitForCompletion(true);// .
 	}
 
 }
