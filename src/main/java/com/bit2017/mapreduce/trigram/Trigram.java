@@ -101,7 +101,7 @@ public class Trigram {
 		//9출력파일 위치지정 
 		FileOutputFormat.setOutputPath(job,new Path(args[1]));
 		//
-		
+		job.waitForCompletion(true);
 		if(job.waitForCompletion(true)==false){
 			return;
 		}
