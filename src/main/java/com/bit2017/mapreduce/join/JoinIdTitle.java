@@ -48,23 +48,23 @@ public class JoinIdTitle {
 				String info = value.toString();
 				String[] tokens = info.split("\t");// 스트링 타입안에 1.2나눔
 				
-				if(tokens.length == 2){
+			/*	if(tokens.length == 2){
 					break;
-				}
+				}*/
 				if("1".equals(tokens)){
 					k.set(tokens[0]+"["+key.toString()+"]");
 				}else if("2".equals(tokens[1])){
 					v.set(tokens[0]);
-				}else{
+				}/*else{
 					continue;
-				}
+				}*/
 				count++;	
 			}
 			//출력 
-			if(count == 2){
+			if(count != 2){
 				return ;
 			}
-			
+			context.write(k,v);
 		}
 
 		
