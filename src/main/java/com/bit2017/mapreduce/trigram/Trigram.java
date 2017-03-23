@@ -31,7 +31,7 @@ public class Trigram {
 				throws IOException, InterruptedException {
 			
 			String line = value.toString();
-			StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,{}!@#$%^&*[]/|()<> ''.:");
+			StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,/|()<> ''.:");
 			if(tokenize.countTokens() < 3) {
 				String firstToken = tokenize.nextToken().toLowerCase();
 				String secondToken = tokenize.nextToken().toLowerCase();
@@ -39,7 +39,7 @@ public class Trigram {
 			String thirdToken = tokenize.nextToken().toLowerCase();
 			
 			//지금까지 읽은 3개의 단어로 trigram을 만들고 그걸 키로 해서 출력 레코드를 만든다
-			trigram.set(firstToken + "" + secondToken + "" + thirdToken);
+			trigram.set(firstToken + " " + secondToken + " " + thirdToken);
 			
 			context.write(trigram,one);  
 			//firstToken 과 secondToken 을 엡데이트 한다.
