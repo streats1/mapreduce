@@ -21,13 +21,13 @@ import com.bit2017.mapreduce.topn.TopN;
 
 public class Trigram { 
 
-	public static class MyMapper extends Mapper<Text,Text, Text,LongWritable> {
+	public static class MyMapper extends Mapper<LongWritable,Text, Text,LongWritable> {
 		private Text trigram = new Text(); 
 		private static LongWritable one = new LongWritable(1L); //?
 		
 
 		@Override
-		protected void map(Text key, Text value, Mapper<Text, Text, Text,
+		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text,
 				LongWritable>.Context context)//context 정확한 의미알기
 				throws IOException, InterruptedException {
 			
