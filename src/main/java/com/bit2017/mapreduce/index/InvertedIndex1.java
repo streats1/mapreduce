@@ -31,13 +31,15 @@ public class InvertedIndex1 {
 			
 			String line = contents.toString();
 			StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,|()<> ''.:");
+			words.clear();
+			
 			while(tokenize.hasMoreTokens()){
 				words.add(tokenize.nextToken().toLowerCase());
 			}
 			for(String w:words){
 				word.set(w);
 			/*word.set(tokenize.nextToken().toLowerCase());//word 
-*/			context.write(word,contents);  
+*/			context.write(word,docId);  
 			}
 			}
 	} 
