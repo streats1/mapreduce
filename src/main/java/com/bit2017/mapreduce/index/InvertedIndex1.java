@@ -1,6 +1,7 @@
 package com.bit2017.mapreduce.index;
 
 import java.io.IOException;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
@@ -19,8 +20,8 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 public class InvertedIndex1 {
 
 	public static class MyMapper extends Mapper<Text,Text, Text,Text> {
+		private Set<String> words = new java.util.HashSet<String>();
 		private Text word = new Text(); 
-		private static LongWritable one = new LongWritable(1L); //?
 		
 
 		@Override
@@ -31,12 +32,15 @@ public class InvertedIndex1 {
 			String line = contents.toString();
 			StringTokenizer tokenize = new StringTokenizer(line,"\r\n\t,|()<> ''.:");
 			while(tokenize.hasMoreTokens()){
-			word.set(tokenize.nextToken().toLowerCase());//word 
-			context.write(word,docId);  
+				words.add(tokenize.nextToken().toLowerCase());
+			}
+			for(String w:words){
+				word.set(w);
+			/*word.set(tokenize.nextToken().toLowerCase());//word 
+*/			context.write(word,docId);  
 			}
 			}
-		
-	
+	}
 
 	public static class MyReducer extends Reducer<Text,Text,Text ,
 	Text> {//받는것과 나가는 클래스가 같은것,.
@@ -101,5 +105,4 @@ public class InvertedIndex1 {
 		//실행실행에 필요한 것
 		job.waitForCompletion(true);// .
 	}
-}
 }
