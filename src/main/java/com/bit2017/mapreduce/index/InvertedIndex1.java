@@ -40,7 +40,7 @@ public class InvertedIndex1 {
 */			context.write(word,contents);  
 			}
 			}
-	}
+	} 
 
 	public static class MyReducer extends Reducer<Text,Text,Text ,
 	Text> {//받는것과 나가는 클래스가 같은것,.
