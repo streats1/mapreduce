@@ -37,7 +37,7 @@ public class InvertedIndex1 {
 			for(String w:words){
 				word.set(w);
 			/*word.set(tokenize.nextToken().toLowerCase());//word 
-*/			context.write(word,docId);  
+*/			context.write(word,contents);  
 			}
 			}
 	}
