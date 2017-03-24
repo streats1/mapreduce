@@ -3,8 +3,6 @@ package com.bit2017.mapreduce.index;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
@@ -43,24 +41,23 @@ public class InvertedIndex1 {
 	public static class MyReducer extends Reducer<Text,Text,Text ,
 	Text> {//받는것과 나가는 클래스가 같은것,.
 
-		private LongWritable sumWritable = new LongWritable();//왜 숫자클래스만 객체생성??
 		
 		@Override
 		protected void reduce(Text word, Iterable<Text> docIds,
 				Reducer<Text, Text, Text, Text>.Context context) throws IOException, InterruptedException 
 		{
-		String s ="";	
+		StringBuilder s = new StringBuilder();	
 		boolean isFirst = true;
 		for(Text docId : docIds){
 			if(isFirst == true){
-				s +=",";
+				s.append(",");
 			}else{
 				isFirst = false;
 			}
-			s += docId.toString();//중복확인.
+			s.append(docId.toString())  ;//중복확인.
 			
 		}
-		context.write(word,new Text(s));//what?word
+		context.write(word,new Text(s.toString()));//what?word
 		}
 		//중복 골라내는 거 알아보기.......................
 	}
@@ -76,6 +73,7 @@ public class InvertedIndex1 {
 		//3.리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
 		//리튜서 타스크 갯수
+		job.setNumReduceTasks(10);
 		
 		//4.출력키
 		job.setMapOutputKeyClass(Text.class);
@@ -83,9 +81,9 @@ public class InvertedIndex1 {
 		job.setMapOutputValueClass(Text.class);
 		
 		//4.reduce 출력키
-		job.setMapOutputKeyClass(Text.class);
+		job.setOutputKeyClass(Text.class);
 				//reduce 출력 밸류ㅜ
-		job.setMapOutputValueClass(Text.class);
+		job.setOutputValueClass(Text.class);
 		
 		
 		//6입력파일 포멧 지정(생략가능) 
@@ -99,7 +97,7 @@ public class InvertedIndex1 {
 		//9출력파일 위치지정 
 		FileOutputFormat.setOutputPath(job,new Path(args[1]));
 		//
-		
+		 
 		//실행실행에 필요한 것
 		job.waitForCompletion(true);// .
 	}
